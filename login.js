@@ -1,15 +1,15 @@
 //import React, { useState, useContext } from 'react';
-// import NavBar from "./navbar";
-//
+//import { isLoggedIn } from "./navbar.js";
+//import { userName1 } from "./navbar.js";
 // export const [isLoggedIn, setIsLoggedIn] = React.useState(true);
 // const  isLoggedIn  = useContext(MyContext);
-
+//import { updateLoggedIn } from './navbar.js';
 
 // const App = () => {
 //   // const [isLoggedIn, setIsLoggedIn] = useState(false);
 //   const [isLoggedIn, setIsLoggedIn] = React.useState(false);
-
-
+//console.log(userName1);
+//const userName = userName1;
   
 //   // 다른 파일에서 상태 변수를 사용할 수 있도록 컨텍스트를 생성합니다.
 //   // const MyContext = createContext(isLoggedIn);
@@ -20,7 +20,7 @@
 // </MyContext.Provider>
 //   );
 // };
-
+updateLoggedIn(20);
 
 function Login() {
   const [show, setShow] = React.useState(true);
@@ -29,7 +29,7 @@ function Login() {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const ctx = React.useContext(UserContext);
-  const [isLoggedIn, setIsLoggedIn] = React.useState(false);
+  //const [isLoggedIn, setIsLoggedIn] = React.useState(false);
 
   // Function to fetch and compare user credentials
   async function handleLogin() {
@@ -38,15 +38,26 @@ function Login() {
     );
     console.log(user.name);
     if (user) {
-        setStatus("Login successful!" + JSON.stringify(user.name));
+        //setStatus("Login successful!" + JSON.stringify(user.name)+user.name);
+        setStatus("Login successful! User: " + user.name);
         // console.log(name);
          // Redirect to the appropriate page or perform other actions after successful login
         //isLoggedIn(true);
          //isLoggedIn(setIsLoggedIn); 
+         //const userName=user.name;
         setShow(false);
+        //updateLoggedIn(true);
+        //console.log("updateLoggedIn:",isLoggedIn);
+       //const userName1 = userName;
+        //console.log("isLoggedIn:",isLoggedIn);
       function LoginTo(){
-        NavBar.MyContext = true;
-        console.log(NavBar.MyContext);
+        //NavBar.MyContext = true;
+        //console.log(isLoggedIn);
+        
+        //isLoggedIn=true;
+        //console.log(userName);
+        //console.log("userName1",userName1);
+        //console.log(isLoggedIn);
       };
     } else {
       setStatus("Invalid email or password");
@@ -142,5 +153,5 @@ function Login() {
   );
 }
 
-
+//export {userName};
 export default Login;

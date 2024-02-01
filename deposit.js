@@ -1,63 +1,86 @@
+const depositOptions = [20, 40, 60, 80, 100];
+
+const ATMDeposit = ({ onChange, isDeposit, isValid }) => {
+    const choice = ['Deposit', 'Cash Back'];
+    console.log(`ATM isDeposit: ${isDeposit}`);
+    return (
+      <label className="label huge">
+        <h3> {choice[Number(!isDeposit)]}</h3>
+        <select onChange={onChange}>
+        {depositOptions.map((option) => (
+          <option key={option} value={option}>
+            ${option}
+          </option>
+        ))}
+      </select>
+        {/* <input id="number-input" type="number" width="200" onChange={onChange}></input> */}
+        <input className="submitBtn" type="submit" disabled={!isValid} width="200" value="Submit" id="submit-input"></input>
+      </label>
+    );
+  };
+  
+
 function Deposit() {
-  const [show,setShow] = React.useState(true);
-  const [status, setStatus] = React.useState('');
-  const [name, setName] = React.useState('');
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
-  const ctx = React.useContext(UserContext);
-
-   function validate(field, label){
-     if (!field) {
-       setStatus('Error: ' + label);
-       setTimeout(()=> setStatus(''),3000);
-       return false;
-     }
-     return true;
-   }
-
-   function handleCreate(){
-     console.log(name,email,password);
-     if (!validate(name, 'name')) return;
-     if (!validate(email, 'email')) return;
-     if (!validate(password, 'password')) return;
-     ctx.users.push({name,email,password,balance:100});
-     setShow(false);
-   }
-
-   function clearForm(){
-     setName('');
-     setEmail('');
-     setPassword('');
-     setShow(true);
-   }
-
-  return (
-   <Card 
-     bgcolor="primary"
-     txtcolor="white"
-     header="Depasit"
-     status={status}
-     body={show ? (
-     <>
-        Name<br/>
-        <input type="input" className="form-control" id="name"
-        placeholder="Enter name" value={name} onChange={e=> setName(e.currentTarget.value)}/><br/> 
-        Email address<br/>
-        <input type="input" className="form-control" id="email"
-        placeholder="Enter Email" value={email} onChange={e=> setEmail(e.currentTarget.value)}/><br/> 
-        Password<br/>
-        <input type="password" className="form-control" id="password"
-        placeholder="Enter password" value={password} onChange={e=> setPassword(e.currentTarget.value)}/><br/> 
-        <button type="submit" className="btn btn-light" onClick={handleCreate}>Create Account</button>
-           </>
-   ):(
-     <>
-     <h5>Success</h5>
-     <button type="submit" className="btn btn-light" onClick={clearForm}>Add another account</button>
-     </>
-   )}
-   />
- )
-}
-
-export default Deposit;
+    const [deposit, setDeposit] = React.useState(0);
+    const [totalState, setTotalState] = React.useState(0);
+    const [isDeposit, setIsDeposit] = React.useState(true);
+    const [atmMode, setAtmMode] = React.useState('');
+    const [validTransaction, setValidTransaction] = React.useState(false);
+  
+    let status = `Account Balance $ ${totalState} `;
+    console.log(`Account Rendered with isDeposit: ${isDeposit}`);
+    const handleChange = (event) => {
+      console.log(Number(event.target.value));
+      if (Number(event.target.value) <= 0) {
+        return setValidTransaction(false);
+      }
+      if (atmMode === 'Cash Back' && Number(event.target.value) > totalState) {
+        setValidTransaction(false);
+      } else {
+        setValidTransaction(true);
+      }
+      setDeposit(Number(event.target.value));
+    };
+    const handleSubmit = (event) => {
+      let newTotal = isDeposit ? totalState + deposit : totalState - deposit;
+      setTotalState(newTotal);
+      setValidTransaction(false);
+      event.preventDefault();
+    };
+  
+    const handleModeSelect = (event) => {
+      console.log(event.target.value);
+      setAtmMode(event.target.value);
+      setValidTransaction(false);
+      if (event.target.value === 'Deposit') {
+        setIsDeposit(true);
+      } else {
+        setIsDeposit(false);
+      }
+    };
+  
+    return (
+      <form onSubmit={handleSubmit}>
+        <>
+          <h2 id="total">{status}</h2>
+          <label>Select an action below to continue</label>
+          <select onChange={(e) => handleModeSelect(e)} name="mode" id="mode-select">
+            <option id="no-selection" value=""></option>
+            <option id="deposit-selection" value="Deposit">
+              Deposit
+            </option>
+            <option id="cashback-selection" value="Cash Back">
+              Cash Back
+            </option>
+          </select>
+          {atmMode && (
+            <ATMDeposit
+              onChange={handleChange}
+              isDeposit={isDeposit}
+              isValid={validTransaction}
+            ></ATMDeposit>
+          )}
+        </>
+      </form>
+    );
+  };

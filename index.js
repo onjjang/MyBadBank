@@ -1,7 +1,3 @@
-//import React from 'react';
-//import UserProvider from './UserContext';
-//import Login from './Login';
-//import NavBar from './NavBar';
 const UserContext = React.createContext();
 function Spa() {
   return (

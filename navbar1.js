@@ -1,33 +1,29 @@
-//import {userName} from "./login.js";
 //import Login from "./login";
-//require {Login} 
-var isLoggedIn = true;
-//var userName1 = "";
 
-// function updateLoggedIn(newValue){
-//   isLoggedIn = newValue;
-// }
-
+const isLoggedIn = "";
+//isLoggedIn = !setShow;
 function NavBar() {
   // const { isLoggedIn, setIsLoggedIn } = useContext(UserContext); // Access isLoggedIn state from context
    //const [isLoggedIn, setIsLoggedIn] = React.useState(false);
- //const isLoggedIn="";
+ // const isLoggedIn=true;
 
   
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary">
-        <div className="container-fluid">
-          <a className="navbar-brand" href="#">MyBadBank3</a>
-          <button className="navbar-toggler" 
-          type="button" 
-          data-bs-toggle="collapse" 
-          data-bs-target="#navbarNavAltMarkup" 
-          aria-controls="navbarNavAltMarkup" 
-          aria-expanded="false" 
+      <nav className="navbar navbar-expand-lg navbar-light bg-light">
+        <a className="navbar-brand" href="#">
+          MyBadBank
+        </a>
+        <button
+          className="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
           aria-label="Toggle navigation">
-            <span className="navbar-toggler-icon"></span>
-          </button>
+          <span className="navbar-toggler-icon"></span>
+        </button>
         <div className="collapse navbar-collapse" 
         id="navbarNavAltMarkup">
           <div className="navbar-nav">
@@ -44,13 +40,13 @@ function NavBar() {
               Deposit
             </a>
             <a
-              className={isLoggedIn ? "nav-link" : "nav-link disabled"}
+              className={!isLoggedIn ? "nav-link" : "nav-link disabled"}
               href="#/withdraw/"
             >
               Withdraw
             </a>
             <a
-              className={isLoggedIn ? "nav-link" : "nav-link disabled"}
+              className={!isLoggedIn ? "nav-link" : "nav-link disabled"}
               href="#/balance/"
             >
               Balance
@@ -68,13 +64,10 @@ function NavBar() {
              {/* Disabled */}
             </a>
           </div>
-          </div>
         </div>
       </nav>
     </>
   );
 }
 
-//export {isLoggedIn}; 
-//export {userName1};
-//export { updateLoggedIn } ;
+export default NavBar;
